@@ -40,7 +40,7 @@ func (movieCreationController *MovieCreationController) mapMovie(c *gin.Context)
 
 	var movieL model.Movie
 	if err := c.ShouldBindJSON(&movieL); err != nil {
-		restErr := apierrors.NewApiError("invalid json", err.Error(), 400, nil)
+		restErr := apierrors.NewApiError("Invalid json", err.Error(), 400, nil)
 		c.JSON(restErr.Status(), restErr)
 		return
 	}

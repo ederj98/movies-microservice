@@ -27,7 +27,7 @@ func TestWhenSendTheMovieToRepositoryThenShouldReturnOk(t *testing.T) {
 	movieCreationService := service.MovieCreationService{
 		MovieRepository: movieRepository,
 	}
-	err := movieCreationService.MovieCreation(movie)
+	err := movieCreationService.Create(movie)
 
 	assert.Nil(t, err)
 	movieRepository.AssertExpectations(t)
@@ -40,7 +40,7 @@ func TestWhenFailedSendTheMovieToRepositoryThenShouldReturnError(t *testing.T) {
 	movieCreationService := service.MovieCreationService{
 		MovieRepository: movieRepository,
 	}
-	err := movieCreationService.MovieCreation(movie)
+	err := movieCreationService.Create(movie)
 
 	assert.NotNil(t, err)
 	assert.EqualError(t, errorExpected, err.Error())

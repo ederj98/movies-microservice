@@ -16,7 +16,7 @@ type MovieFindAllService struct {
 	MovieRepository port.MovieRepository
 }
 
-func (movieFindAllService *MovieFindAllService) MovieFindAll() (movies []model.Movie, err error) {
+func (movieFindAllService *MovieFindAllService) FindAll() (movies []model.Movie, err error) {
 
 	movies, err = movieFindAllService.MovieRepository.FindAll()
 

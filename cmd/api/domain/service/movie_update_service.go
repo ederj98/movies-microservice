@@ -16,7 +16,7 @@ type MovieUpdateService struct {
 	MovieRepository port.MovieRepository
 }
 
-func (movieUpdateService *MovieUpdateService) MovieUpdate(id int64, movie model.Movie) (err error) {
+func (movieUpdateService *MovieUpdateService) Update(id int64, movie model.Movie) (err error) {
 
 	err = movieUpdateService.MovieRepository.Update(id, movie)
 

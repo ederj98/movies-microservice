@@ -15,7 +15,7 @@ func TestWhenDeleteTheMovieToRepositoryThenShouldReturnOk(t *testing.T) {
 	movieDeleteService := service.MovieDeleteService{
 		MovieRepository: movieRepository,
 	}
-	err := movieDeleteService.MovieDelete(movie.Id)
+	err := movieDeleteService.Delete(movie.Id)
 
 	assert.Nil(t, err)
 	movieRepository.AssertExpectations(t)

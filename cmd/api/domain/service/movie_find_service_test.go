@@ -17,7 +17,7 @@ func TestWhenGetTheMovieFindFromRepositoryThenShouldReturnOk(t *testing.T) {
 		MovieRepository: movieRepository,
 	}
 
-	movie, err := movieFindService.MovieFind(movieB.Id)
+	movie, err := movieFindService.Find(movieB.Id)
 
 	assert.Nil(t, err)
 	assert.Equal(t, movieB, movie)
@@ -32,7 +32,7 @@ func TestWhenFailedGetTheMovieFromRepositoryThenShouldReturnError(t *testing.T) 
 		MovieRepository: movieRepository,
 	}
 
-	movie, err := movieFindService.MovieFind(0)
+	movie, err := movieFindService.Find(0)
 
 	assert.NotNil(t, err)
 	assert.EqualError(t, errorExpected, err.Error())

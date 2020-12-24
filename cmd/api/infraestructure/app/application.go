@@ -21,15 +21,14 @@ func StartApplication() {
 
 	router.Use(middleware.ErrorHandler())
 	router.POST("/movies", container.GetMovieCreationController().MakeMovieCreation)
+	router.GET("/movies", container.GetMovieFindAllController().MakeMovieFindAll)
+	router.GET("/movies/:id", container.GetMovieFindController().MakeMovieFind)
+	router.PUT("/movies/:id", container.GetMovieUpdateController().MakeMovieUpdate)
+	router.DELETE("/movies/:id", container.GetMovieDeleteController().MakeMovieDelete)
 
 	if err := router.Run(":8081"); err != nil {
 		logger.Errorf("error running server", err)
 	} else {
 		logger.Info("Start the application...")
 	}
-
-	/*router.PUT("/movies/:id", handler.Update)
-	router.DELETE("/movies/:id", handler.Delete)
-	router.GET("/movies/:id", handler.Get)
-	router.GET("/movies", handler.GetAll)*/
 }

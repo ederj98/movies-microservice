@@ -16,7 +16,7 @@ type MovieFindService struct {
 	MovieRepository port.MovieRepository
 }
 
-func (movieFindService *MovieFindService) MovieFind(id int64) (movie model.Movie, err error) {
+func (movieFindService *MovieFindService) Find(id int64) (movie model.Movie, err error) {
 
 	movie, err = movieFindService.MovieRepository.Find(id)
 

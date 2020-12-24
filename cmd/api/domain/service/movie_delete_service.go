@@ -15,7 +15,7 @@ type MovieDeleteService struct {
 	MovieRepository port.MovieRepository
 }
 
-func (movieDeleteService *MovieDeleteService) MovieDelete(id int64) (err error) {
+func (movieDeleteService *MovieDeleteService) Delete(id int64) (err error) {
 
 	err = movieDeleteService.MovieRepository.Delete(id)
 
