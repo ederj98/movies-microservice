@@ -20,10 +20,6 @@ type MovieFindAll struct {
 	MovieRepository port.MovieRepository
 }
 
-type MovieFindAllApplicationPort interface {
-	FindAll() (movies []model.Movie, err error)
-}
-
 func (movieFindAll *MovieFindAll) Handler() (movieLots []model.Movie, err error) {
 
 	movieLots, err = movieFindAll.MovieRepository.FindAll()

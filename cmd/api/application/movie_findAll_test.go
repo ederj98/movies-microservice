@@ -12,29 +12,29 @@ import (
 )
 
 var (
-	movieFindAllServiceMock = new(mock.MovieFindAllServiceMock)
+	movieFindAllRepositoryMock = new(mock.MovieRepositoryMock)
 )
 
 func TestWhenAllBeOKAndListMovieThenReturnNilError(t *testing.T) {
 
 	movieLots := []model.Movie{builder.NewMovieDataBuilder().Build()}
-	movieFindAllServiceMock.On("FindAll").Return(movieLots, nil).Once()
+	movieFindAllRepositoryMock.On("FindAll").Return(movieLots, nil).Once()
 	movieFindAll := application.MovieFindAll{
-		MovieFindAllService: movieFindAllServiceMock,
+		MovieRepository: movieFindAllRepositoryMock,
 	}
 
 	parking, err := movieFindAll.Handler()
 
 	assert.Nil(t, err)
 	assert.Equal(t, movieLots, parking)
-	movieFindAllServiceMock.AssertExpectations(t)
+	movieFindAllRepositoryMock.AssertExpectations(t)
 }
 func TestWhenFailedListMovieThenReturnError(t *testing.T) {
 	movieLots := []model.Movie{}
 	expectedErrorMessage := errors.New("error getting information from service Movie List")
-	movieFindAllServiceMock.On("FindAll").Return(movieLots, expectedErrorMessage).Once()
+	movieFindAllRepositoryMock.On("FindAll").Return(movieLots, expectedErrorMessage).Once()
 	movieFindAll := application.MovieFindAll{
-		MovieFindAllService: movieFindAllServiceMock,
+		MovieRepository: movieFindAllRepositoryMock,
 	}
 
 	movies, err := movieFindAll.Handler()
@@ -42,5 +42,5 @@ func TestWhenFailedListMovieThenReturnError(t *testing.T) {
 	assert.NotNil(t, err)
 	assert.Equal(t, movieLots, movies)
 	assert.EqualError(t, err, expectedErrorMessage.Error())
-	movieFindAllServiceMock.AssertExpectations(t)
+	movieFindAllRepositoryMock.AssertExpectations(t)
 }

@@ -88,3 +88,17 @@ func TestUserMysqlRepository_Find(t *testing.T) {
 	assert.EqualValues(t, movie.Id, movieFind.Id)
 	assert.EqualValues(t, "John Doe", movieFind.Director)
 }
+
+func TestMovieMysqlRepository_Update(t *testing.T) {
+	tx := movieMysqlRepository.Db.Begin()
+	defer tx.Rollback()
+	var movie model.Movie
+	movie = builder.NewMovieDataBuilder().Build()
+	_ = movieMysqlRepository.Create(movie)
+
+	movie.Director = "Jane Doe"
+	errUpdate := movieMysqlRepository.Update(1, movie)
+
+	assert.Nil(t, errUpdate)
+	assert.EqualValues(t, movie.Director, "Jane Doe", "Director names are differences")
+}
