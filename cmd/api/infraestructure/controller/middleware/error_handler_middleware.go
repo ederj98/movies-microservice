@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/ederj98/movies-microservice/cmd/api/domain/exception"
+	infraestructure "github.com/ederj98/movies-microservice/cmd/api/infraestructure/exception"
 	"github.com/ederj98/movies-microservice/pkg/apierrors"
 	"github.com/ederj98/movies-microservice/pkg/logger"
 	"github.com/gin-gonic/gin"
@@ -27,7 +28,12 @@ func ErrorHandler() gin.HandlerFunc {
 			return
 		}
 
-		if _, ok := cause.(exception.InternalServerErrorPort); ok {
+		if _, ok := cause.(exception.Duplicity); ok {
+			throwException(c, http.StatusBadRequest, err.Err, cause)
+			return
+		}
+
+		if _, ok := cause.(infraestructure.InternalServerErrorPort); ok {
 			throwException(c, http.StatusInternalServerError, err.Err, cause)
 			return
 		}

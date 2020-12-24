@@ -10,6 +10,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const (
+	errorFindRepository = "The movie isn't not found"
+)
+
 func TestWhenGetTheMovieFindFromRepositoryThenShouldReturnOk(t *testing.T) {
 	movieB := builder.NewMovieDataBuilder().Build()
 	movieRepository.On("Find", movieB.Id).Times(1).Return(movieB, nil)
@@ -26,7 +30,7 @@ func TestWhenGetTheMovieFindFromRepositoryThenShouldReturnOk(t *testing.T) {
 func TestWhenFailedGetTheMovieFromRepositoryThenShouldReturnError(t *testing.T) {
 
 	movieB := model.Movie{}
-	errorExpected := errors.New(errorRepository)
+	errorExpected := errors.New(errorFindRepository)
 	movieRepository.On("Find", movieB.Id).Times(1).Return(movieB, errorExpected)
 	movieFindService := service.MovieFindService{
 		MovieRepository: movieRepository,

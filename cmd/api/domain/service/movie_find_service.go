@@ -1,11 +1,14 @@
 package service
 
 import (
-	"errors"
-
+	"github.com/ederj98/movies-microservice/cmd/api/domain/exception"
 	"github.com/ederj98/movies-microservice/cmd/api/domain/model"
 	"github.com/ederj98/movies-microservice/cmd/api/domain/port"
 	"github.com/ederj98/movies-microservice/pkg/logger"
+)
+
+const (
+	errorNotFoundRepository = "The movie isn't not found"
 )
 
 type MovieFindServicePort interface {
@@ -21,7 +24,7 @@ func (movieFindService *MovieFindService) Find(id int64) (movie model.Movie, err
 	movie, err = movieFindService.MovieRepository.Find(id)
 
 	if err != nil {
-		err = errors.New(errorRepository)
+		err = exception.DataNotFound{ErrMessage: errorNotFoundRepository}
 		logger.Error(errorRepository, err)
 		return model.Movie{}, err
 	}

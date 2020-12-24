@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 
+	"github.com/ederj98/movies-microservice/cmd/api/domain/exception"
 	"github.com/ederj98/movies-microservice/cmd/api/domain/model"
 	"github.com/ederj98/movies-microservice/cmd/api/domain/port"
 	"github.com/ederj98/movies-microservice/pkg/logger"
@@ -17,6 +18,13 @@ type MovieUpdateService struct {
 }
 
 func (movieUpdateService *MovieUpdateService) Update(id int64, movie model.Movie) (err error) {
+
+	_, exist := movieUpdateService.MovieRepository.Find(id)
+	if exist != nil {
+		err = exception.DataNotFound{ErrMessage: errorNotFoundRepository}
+		logger.Error(errorRepository, err)
+		return err
+	}
 
 	err = movieUpdateService.MovieRepository.Update(id, movie)
 

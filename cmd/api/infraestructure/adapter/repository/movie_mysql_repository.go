@@ -26,6 +26,14 @@ func (movieMySqlRepository *MovieMySqlRepository) Create(movie model.Movie) erro
 	return nil
 }
 
+func (movieMySqlRepository *MovieMySqlRepository) Exist(name string) bool {
+	var movieEntity entity.MovieEntity
+	if movieMySqlRepository.Db.Where(&entity.MovieEntity{Name: name}).Find(&movieEntity).Error != nil {
+		return false
+	}
+	return true
+}
+
 func (movieMySqlRepository *MovieMySqlRepository) Find(id int64) (model.Movie, error) {
 	var movieEntity entity.MovieEntity
 	if movieMySqlRepository.Db.First(&movieEntity, id).Error != nil {

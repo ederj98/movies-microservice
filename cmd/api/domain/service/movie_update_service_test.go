@@ -12,6 +12,7 @@ import (
 func TestWhenSendToUpdateTheMovieToRepositoryThenShouldReturnOk(t *testing.T) {
 
 	movie := builder.NewMovieDataBuilder().Build()
+	movieRepository.On("Find", movie.Id).Times(1).Return(movie, nil)
 	movieRepository.On("Update", movie.Id, movie).Times(1).Return(nil)
 	movieUpdateService := service.MovieUpdateService{
 		MovieRepository: movieRepository,
@@ -25,6 +26,7 @@ func TestWhenFailedSendToUpdateTheMovieToRepositoryThenShouldReturnError(t *test
 
 	movie := builder.NewMovieDataBuilder().Build()
 	errorExpected := errors.New(errorRepository)
+	movieRepository.On("Find", movie.Id).Times(1).Return(movie, nil)
 	movieRepository.On("Update", movie.Id, movie).Times(1).Return(errorExpected)
 	movieUpdateService := service.MovieUpdateService{
 		MovieRepository: movieRepository,

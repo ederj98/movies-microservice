@@ -24,8 +24,8 @@ func (movieFindController *MovieFindController) MakeMovieFind(context *gin.Conte
 	movie, err := movieFindController.MovieFindApplication.Handler(id)
 
 	if err != nil {
-		err := apierrors.NewNotFoundApiError(failedFindMovie)
-		context.JSON(err.Status(), err)
+		abort(context, err)
+		return
 	}
 
 	context.JSON(http.StatusOK, movie)

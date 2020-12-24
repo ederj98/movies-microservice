@@ -11,6 +11,7 @@ import (
 func TestWhenDeleteTheMovieToRepositoryThenShouldReturnOk(t *testing.T) {
 
 	movie := builder.NewMovieDataBuilder().Build()
+	movieRepository.On("Find", movie.Id).Times(1).Return(movie, nil)
 	movieRepository.On("Delete", movie.Id).Times(1).Return(nil)
 	movieDeleteService := service.MovieDeleteService{
 		MovieRepository: movieRepository,

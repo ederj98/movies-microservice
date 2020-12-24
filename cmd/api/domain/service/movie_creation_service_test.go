@@ -17,12 +17,14 @@ var (
 )
 
 const (
-	errorRepository = "error getting repository information"
+	errorRepository      = "error getting repository information"
+	errorExistRepository = "The movie is already exist"
 )
 
 func TestWhenSendTheMovieToRepositoryThenShouldReturnOk(t *testing.T) {
 
 	movie := builder.NewMovieDataBuilder().Build()
+	movieRepository.On("Exist", movie.Name).Times(1).Return(false)
 	movieRepository.On("Create", movie).Times(1).Return(nil)
 	movieCreationService := service.MovieCreationService{
 		MovieRepository: movieRepository,
@@ -36,6 +38,7 @@ func TestWhenFailedSendTheMovieToRepositoryThenShouldReturnError(t *testing.T) {
 
 	movie := builder.NewMovieDataBuilder().Build()
 	errorExpected := errors.New(errorRepository)
+	movieRepository.On("Exist", movie.Name).Times(1).Return(false)
 	movieRepository.On("Create", movie).Times(1).Return(errorExpected)
 	movieCreationService := service.MovieCreationService{
 		MovieRepository: movieRepository,
@@ -46,3 +49,19 @@ func TestWhenFailedSendTheMovieToRepositoryThenShouldReturnError(t *testing.T) {
 	assert.EqualError(t, errorExpected, err.Error())
 	movieRepository.AssertExpectations(t)
 }
+
+/*func TestWhenTheMovieExistThenShouldReturnError(t *testing.T) {
+
+	movie := builder.NewMovieDataBuilder().Build()
+	errorExpected := errors.New(errorExistRepository)
+	movieRepository.On("Exist", movie.Name).Times(1).Return(true)
+	movieRepository.On("Create", movie).Times(1).Return(errorExpected)
+	movieCreationService := service.MovieCreationService{
+		MovieRepository: movieRepository,
+	}
+	err := movieCreationService.Create(movie)
+
+	assert.NotNil(t, err)
+	assert.EqualError(t, errorExpected, err.Error())
+	movieRepository.AssertExpectations(t)
+}*/
