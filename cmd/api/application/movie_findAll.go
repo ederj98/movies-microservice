@@ -2,7 +2,7 @@ package application
 
 import (
 	"github.com/ederj98/movies-microservice/cmd/api/domain/model"
-	"github.com/ederj98/movies-microservice/cmd/api/domain/service"
+	"github.com/ederj98/movies-microservice/cmd/api/domain/port"
 	"github.com/ederj98/movies-microservice/pkg/logger"
 )
 
@@ -17,12 +17,16 @@ type MovieFindAllApplication interface {
 }
 
 type MovieFindAll struct {
-	MovieFindAllService service.MovieFindAllServicePort
+	MovieRepository port.MovieRepository
+}
+
+type MovieFindAllApplicationPort interface {
+	FindAll() (movies []model.Movie, err error)
 }
 
 func (movieFindAll *MovieFindAll) Handler() (movieLots []model.Movie, err error) {
 
-	movieLots, err = movieFindAll.MovieFindAllService.FindAll()
+	movieLots, err = movieFindAll.MovieRepository.FindAll()
 
 	if err != nil {
 		logger.Error(errorServiceMovieList, err)

@@ -17,7 +17,7 @@ func GetMovieDeleteAccessApplication() application.MovieDeleteApplication {
 }
 
 func GetMovieFindAllAccessApplication() application.MovieFindAllApplication {
-	return &application.MovieFindAll{MovieFindAllService: getFindAllMovieService()}
+	return &application.MovieFindAll{MovieRepository: getMovieRepository()}
 }
 
 func GetMovieFindAccessApplication() application.MovieFindApplication {

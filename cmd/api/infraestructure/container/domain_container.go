@@ -1,6 +1,8 @@
 package container
 
-import "github.com/ederj98/movies-microservice/cmd/api/domain/service"
+import (
+	"github.com/ederj98/movies-microservice/cmd/api/domain/service"
+)
 
 func getCreateMovieService() service.MovieCreationServicePort {
 	return &service.MovieCreationService{
@@ -16,12 +18,6 @@ func getUpdateMovieService() service.MovieUpdateServicePort {
 
 func getDeleteMovieService() service.MovieDeleteServicePort {
 	return &service.MovieDeleteService{
-		MovieRepository: getMovieRepository(),
-	}
-}
-
-func getFindAllMovieService() service.MovieFindAllServicePort {
-	return &service.MovieFindAllService{
 		MovieRepository: getMovieRepository(),
 	}
 }
