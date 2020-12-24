@@ -20,7 +20,7 @@ type MovieCreationService struct {
 	MovieRepository port.MovieRepository
 }
 
-func (movieCreationService *MovieCreationService) MovieCreation(movie model.Movie) (err error) {
+func (movieCreationService *MovieCreationService) Create(movie model.Movie) (err error) {
 
 	err = movieCreationService.MovieRepository.Create(movie)
 

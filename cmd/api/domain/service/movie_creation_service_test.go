@@ -13,32 +13,36 @@ import (
 )
 
 var (
-	movieCreationRepository = new(mock.MovieRepositoryMock)
+	movieRepository = new(mock.MovieRepositoryMock)
+)
+
+const (
+	errorRepository = "error getting repository information"
 )
 
 func TestWhenSendTheMovieToRepositoryThenShouldReturnOk(t *testing.T) {
 
 	movie := builder.NewMovieDataBuilder().Build()
-	movieCreationRepository.On("Create", movie).Times(1).Return(nil)
+	movieRepository.On("Create", movie).Times(1).Return(nil)
 	movieCreationService := service.MovieCreationService{
-		MovieRepository: movieCreationRepository,
+		MovieRepository: movieRepository,
 	}
 	err := movieCreationService.MovieCreation(movie)
 
 	assert.Nil(t, err)
-	movieCreationRepository.AssertExpectations(t)
+	movieRepository.AssertExpectations(t)
 }
 func TestWhenFailedSendTheMovieToRepositoryThenShouldReturnError(t *testing.T) {
 
 	movie := builder.NewMovieDataBuilder().Build()
-	errorExpected := errors.New("error getting repository information")
-	movieCreationRepository.On("Create", movie).Times(1).Return(errorExpected)
+	errorExpected := errors.New(errorRepository)
+	movieRepository.On("Create", movie).Times(1).Return(errorExpected)
 	movieCreationService := service.MovieCreationService{
-		MovieRepository: movieCreationRepository,
+		MovieRepository: movieRepository,
 	}
 	err := movieCreationService.MovieCreation(movie)
 
 	assert.NotNil(t, err)
 	assert.EqualError(t, errorExpected, err.Error())
-	movieCreationRepository.AssertExpectations(t)
+	movieRepository.AssertExpectations(t)
 }
