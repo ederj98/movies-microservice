@@ -50,12 +50,10 @@ func TestWhenFailedSendTheMovieToRepositoryThenShouldReturnError(t *testing.T) {
 	movieRepository.AssertExpectations(t)
 }
 
-/*func TestWhenTheMovieExistThenShouldReturnError(t *testing.T) {
-
+func TestWhenMovieExistThenShouldReturnError(t *testing.T) {
 	movie := builder.NewMovieDataBuilder().Build()
 	errorExpected := errors.New(errorExistRepository)
 	movieRepository.On("Exist", movie.Name).Times(1).Return(true)
-	movieRepository.On("Create", movie).Times(1).Return(errorExpected)
 	movieCreationService := service.MovieCreationService{
 		MovieRepository: movieRepository,
 	}
@@ -64,4 +62,4 @@ func TestWhenFailedSendTheMovieToRepositoryThenShouldReturnError(t *testing.T) {
 	assert.NotNil(t, err)
 	assert.EqualError(t, errorExpected, err.Error())
 	movieRepository.AssertExpectations(t)
-}*/
+}

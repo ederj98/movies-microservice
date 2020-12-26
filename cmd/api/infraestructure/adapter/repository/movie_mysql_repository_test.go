@@ -2,6 +2,7 @@ package repository_test
 
 import (
 	"context"
+	"errors"
 	"os"
 	"testing"
 
@@ -68,7 +69,10 @@ func TestMovieMysqlRepository_Create(t *testing.T) {
 	err := movieMysqlRepository.Create(movie)
 
 	assert.Nil(t, err)
-	assert.EqualValues(t, movie.Name, "Interstellar", "user names are differences")
+	assert.EqualValues(t, movie.Name, "Interstellar")
+	assert.EqualValues(t, movie.Director, "John Doe")
+	assert.EqualValues(t, movie.Writer, "Jane Doe")
+	assert.EqualValues(t, movie.Stars, "John Jr Doe, Jane M Doe")
 	assert.NotEqual(t, movie.Director, "sistemas31")
 	assert.NotNil(t, movie.Id, "movie id shouldn't be nil ")
 }
@@ -89,6 +93,20 @@ func TestUserMysqlRepository_Find(t *testing.T) {
 	assert.EqualValues(t, "John Doe", movieFind.Director)
 }
 
+func TestUserMysqlRepository_FindAll(t *testing.T) {
+	tx := movieMysqlRepository.Db.Begin()
+	defer tx.Rollback()
+
+	var movie model.Movie
+	movie = builder.NewMovieDataBuilder().Build()
+	_ = movieMysqlRepository.Create(movie)
+
+	movieFind, err := movieMysqlRepository.FindAll()
+
+	assert.Nil(t, err)
+	assert.NotNil(t, movieFind)
+}
+
 func TestMovieMysqlRepository_Update(t *testing.T) {
 	tx := movieMysqlRepository.Db.Begin()
 	defer tx.Rollback()
@@ -101,4 +119,21 @@ func TestMovieMysqlRepository_Update(t *testing.T) {
 
 	assert.Nil(t, errUpdate)
 	assert.EqualValues(t, movie.Director, "Jane Doe", "Director names are differences")
+	assert.EqualValues(t, movie.Stars, "John Jr Doe, Jane M Doe")
+	assert.NotEqual(t, movie.Director, "John Doe")
+}
+
+func TestMovieMysqlRepository_Delete(t *testing.T) {
+	tx := movieMysqlRepository.Db.Begin()
+	defer tx.Rollback()
+	var movie model.Movie
+	movie = builder.NewMovieDataBuilder().Build()
+	_ = movieMysqlRepository.Create(movie)
+
+	errDelete := movieMysqlRepository.Delete(1)
+
+	assert.Nil(t, errDelete)
+	_, err := movieMysqlRepository.Find(movie.Id)
+	assert.NotNil(t, err)
+	assert.EqualError(t, errors.New("movie with id: 1 not found"), err.Error())
 }
