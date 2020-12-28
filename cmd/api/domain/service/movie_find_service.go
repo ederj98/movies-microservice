@@ -1,6 +1,8 @@
 package service
 
 import (
+	"fmt"
+
 	"github.com/ederj98/movies-microservice/cmd/api/domain/exception"
 	"github.com/ederj98/movies-microservice/cmd/api/domain/model"
 	"github.com/ederj98/movies-microservice/cmd/api/domain/port"
@@ -16,17 +18,27 @@ type MovieFindServicePort interface {
 }
 
 type MovieFindService struct {
-	MovieRepository port.MovieRepository
+	MovieRepository      port.MovieRepository
+	MovieRedisRepository port.MovieRedisRepository
 }
 
 func (movieFindService *MovieFindService) Find(id int64) (movie model.Movie, err error) {
 
-	movie, err = movieFindService.MovieRepository.Find(id)
+	movie, err = movieFindService.MovieRedisRepository.Get(id)
+	logger.Info(fmt.Sprintf("Consulta Redis: %s", movie))
 
 	if err != nil {
-		err = exception.DataNotFound{ErrMessage: errorNotFoundRepository}
-		logger.Error(errorRepository, err)
-		return model.Movie{}, err
+		movie, err = movieFindService.MovieRepository.Find(id)
+		if err != nil {
+			err = exception.DataNotFound{ErrMessage: errorNotFoundRepository}
+			logger.Error(errorRepository, err)
+			return model.Movie{}, err
+		}
+		error := movieFindService.MovieRedisRepository.Set(movie)
+		if error != nil {
+			logger.Error(errorRepository, error)
+		}
+		return movie, nil
 	}
 
 	return movie, nil

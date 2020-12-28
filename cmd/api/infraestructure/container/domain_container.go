@@ -24,6 +24,7 @@ func getDeleteMovieService() service.MovieDeleteServicePort {
 
 func getFindMovieService() service.MovieFindServicePort {
 	return &service.MovieFindService{
-		MovieRepository: getMovieRepository(),
+		MovieRepository:      getMovieRepository(),
+		MovieRedisRepository: getMovieRedisRepository(),
 	}
 }

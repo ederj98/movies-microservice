@@ -13,7 +13,8 @@ import (
 )
 
 var (
-	movieRepository = new(mock.MovieRepositoryMock)
+	movieRepository      = new(mock.MovieRepositoryMock)
+	movieRedisRepository = new(mock.MovieRedisRepositoryMock)
 )
 
 const (

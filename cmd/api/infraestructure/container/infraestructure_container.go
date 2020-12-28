@@ -32,3 +32,9 @@ func getMovieRepository() port.MovieRepository {
 		Db: config.GetDatabaseInstance(),
 	}
 }
+
+func getMovieRedisRepository() port.MovieRedisRepository {
+	return &repository.MovieRedisRepository{
+		Db: config.GetClient(),
+	}
+}

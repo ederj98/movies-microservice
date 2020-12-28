@@ -29,7 +29,6 @@ func GetDatabaseInstance() *gorm.DB {
 	port, _ := strconv.ParseInt(os.Getenv(MysqlPort), 10, 64)
 
 	dataSource := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8&parseTime=True&loc=UTC", userName, password, host, port, schema)
-	//fmt.Println(dataSource)
 	db, err := gorm.Open("mysql", dataSource)
 	if err != nil {
 		logger.Error(err.Error(), err)
