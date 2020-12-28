@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/ederj98/movies-microservice/cmd/api/application"
+	"github.com/ederj98/movies-microservice/cmd/api/infraestructure/util"
 	"github.com/ederj98/movies-microservice/pkg/apierrors"
 	"github.com/gin-gonic/gin"
 )
@@ -27,6 +28,8 @@ func (movieFindAllController *MovieFindAllController) MakeMovieFindAll(context *
 		context.JSON(err.Status(), err)
 	}
 
-	context.JSON(http.StatusOK, moviesList)
+	//Resty usage test
+	util.RestyGet()
 
+	context.JSON(http.StatusOK, moviesList)
 }

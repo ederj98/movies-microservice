@@ -77,7 +77,7 @@ func TestMovieMysqlRepository_Create(t *testing.T) {
 	assert.NotNil(t, movie.Id, "movie id shouldn't be nil ")
 }
 
-func TestUserMysqlRepository_Find(t *testing.T) {
+func TestMovieMysqlRepository_Find(t *testing.T) {
 
 	tx := movieMysqlRepository.Db.Begin()
 	defer tx.Rollback()
@@ -93,7 +93,7 @@ func TestUserMysqlRepository_Find(t *testing.T) {
 	assert.EqualValues(t, "John Doe", movieFind.Director)
 }
 
-func TestUserMysqlRepository_FindAll(t *testing.T) {
+func TestMovieMysqlRepository_FindAll(t *testing.T) {
 	tx := movieMysqlRepository.Db.Begin()
 	defer tx.Rollback()
 
