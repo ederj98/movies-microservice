@@ -10,16 +10,18 @@ import (
 
 const (
 	RedisHost   = "REDIS_HOST"
+	RedisPort   = "REDIS_PORT"
 	RedisSchema = "REDIS_SCHEMA"
 	RedisExpire = "REDIS_EXPIRE"
 )
 
 func GetClient() *redis.Client {
 	address := os.Getenv(RedisHost)
+	port := os.Getenv(RedisPort)
 	schema, _ := strconv.Atoi(os.Getenv(RedisSchema))
 
 	db := redis.NewClient(&redis.Options{
-		Addr:     address,
+		Addr:     address + ":" + port,
 		Password: "",
 		DB:       schema,
 	})

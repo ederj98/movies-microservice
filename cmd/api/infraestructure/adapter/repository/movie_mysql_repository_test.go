@@ -22,8 +22,10 @@ var (
 
 func TestMain(m *testing.M) {
 	containerMockServer, ctx := load()
+	containerMockServerR, ctx := loadRedis()
 	code := m.Run()
 	beforeAll(containerMockServer, ctx)
+	beforeAll(containerMockServerR, ctx)
 	os.Exit(code)
 }
 
@@ -69,12 +71,6 @@ func TestMovieMysqlRepository_Create(t *testing.T) {
 	err := movieMysqlRepository.Create(movie)
 
 	assert.Nil(t, err)
-	assert.EqualValues(t, movie.Name, "Interstellar")
-	assert.EqualValues(t, movie.Director, "John Doe")
-	assert.EqualValues(t, movie.Writer, "Jane Doe")
-	assert.EqualValues(t, movie.Stars, "John Jr Doe, Jane M Doe")
-	assert.NotEqual(t, movie.Director, "sistemas31")
-	assert.NotNil(t, movie.Id, "movie id shouldn't be nil ")
 }
 
 func TestMovieMysqlRepository_Find(t *testing.T) {
@@ -90,7 +86,10 @@ func TestMovieMysqlRepository_Find(t *testing.T) {
 	assert.Nil(t, err)
 	assert.NotNil(t, movieFind)
 	assert.EqualValues(t, movie.Id, movieFind.Id)
-	assert.EqualValues(t, "John Doe", movieFind.Director)
+	assert.EqualValues(t, movie.Name, movieFind.Name)
+	assert.EqualValues(t, movie.Director, movieFind.Director)
+	assert.EqualValues(t, movie.Writer, movieFind.Writer)
+	assert.EqualValues(t, movie.Stars, movieFind.Stars)
 }
 
 func TestMovieMysqlRepository_FindAll(t *testing.T) {

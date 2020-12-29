@@ -19,13 +19,6 @@ var (
 	movieRedisRepository repository.MovieRedisRepository
 )
 
-func TestMainRedis(m *testing.M) {
-	containerMockServer, ctx := load()
-	code := m.Run()
-	beforeAll(containerMockServer, ctx)
-	os.Exit(code)
-}
-
 func loadRedis() (testcontainers.Container, context.Context) {
 	ctx := context.Background()
 	req := testcontainers.ContainerRequest{
@@ -39,8 +32,10 @@ func loadRedis() (testcontainers.Container, context.Context) {
 	})
 
 	host, _ := redisC.Host(ctx)
-	//p, _ := redisC.MappedPort(ctx, "6379/tcp")
+	p, _ := redisC.MappedPort(ctx, "6379/tcp")
+	port := p.Port()
 	_ = os.Setenv("REDIS_HOST", host)
+	_ = os.Setenv("REDIS_PORT", port)
 	_ = os.Setenv("REDIS_SCHEMA", "1")
 
 	movieRedisRepository = repository.MovieRedisRepository{
@@ -55,26 +50,21 @@ func TestMovieRedisRepository_Set(t *testing.T) {
 	err := movieRedisRepository.Set(movie)
 
 	assert.Nil(t, err)
-	assert.EqualValues(t, movie.Name, "Interstellar")
-	assert.EqualValues(t, movie.Director, "John Doe")
-	assert.EqualValues(t, movie.Writer, "Jane Doe")
-	assert.EqualValues(t, movie.Stars, "John Jr Doe, Jane M Doe")
-	assert.NotEqual(t, movie.Director, "sistemas31")
-	assert.NotNil(t, movie.Id, "movie id shouldn't be nil ")
 }
 
-/*func TestMovieMysqlRepository_Find(t *testing.T) {
+func TestMovieRedisRepository_Get(t *testing.T) {
 
-	tx := movieMysqlRepository.Db.Begin()
-	defer tx.Rollback()
 	var movie model.Movie
 	movie = builder.NewMovieDataBuilder().Build()
-	err := movieMysqlRepository.Create(movie)
+	err := movieRedisRepository.Set(movie)
 
-	movieFind, err := movieMysqlRepository.Find(movie.Id)
+	movieFind, err := movieRedisRepository.Get(movie.Id)
 
 	assert.Nil(t, err)
 	assert.NotNil(t, movieFind)
 	assert.EqualValues(t, movie.Id, movieFind.Id)
-	assert.EqualValues(t, "John Doe", movieFind.Director)
-}*/
+	assert.EqualValues(t, movie.Name, movieFind.Name)
+	assert.EqualValues(t, movie.Director, movieFind.Director)
+	assert.EqualValues(t, movie.Writer, movieFind.Writer)
+	assert.EqualValues(t, movie.Stars, movieFind.Stars)
+}
