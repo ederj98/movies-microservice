@@ -29,7 +29,7 @@ const validationSchema = Yup.object().shape<FormValues>({
   stars: Yup.string().required('El campo Stars es requerido.'),
 });
 
-export const FormCrearProducto: React.FC<FormCrearPeliculaProp> = ({
+export const FormCrearPelicula: React.FC<FormCrearPeliculaProp> = ({
   onSubmit,
   disabled,
   formTitle,
@@ -45,7 +45,7 @@ export const FormCrearProducto: React.FC<FormCrearPeliculaProp> = ({
     { resetForm }: FormikHelpers<FormValues>
   ) => {
     onSubmit({
-      Id: '',
+      Id: 0,
       Name: values.name,
       Director: values.director,
       Writer: values.writer,
@@ -62,6 +62,10 @@ export const FormCrearProducto: React.FC<FormCrearPeliculaProp> = ({
   return (
     <form onSubmit={formik.handleSubmit}>
       <h2>{formTitle}</h2>
+      <br/>
+      {formik.touched.name && formik.errors.name && (
+        <SpanError>{formik.errors.name}</SpanError>
+      )}
       <Input
         disabled={disabled}
         name="name"
@@ -69,8 +73,8 @@ export const FormCrearProducto: React.FC<FormCrearPeliculaProp> = ({
         value={formik.values.name}
         onChange={formik.handleChange}
       />
-      {formik.touched.name && formik.errors.name && (
-        <SpanError>{formik.errors.name}</SpanError>
+      {formik.touched.director && formik.errors.director && (
+        <SpanError>{formik.errors.director}</SpanError>
       )}
       <Input
         disabled={disabled}
@@ -79,8 +83,8 @@ export const FormCrearProducto: React.FC<FormCrearPeliculaProp> = ({
         value={formik.values.director}
         onChange={formik.handleChange}
       />
-      {formik.touched.director && formik.errors.director && (
-        <SpanError>{formik.errors.director}</SpanError>
+      {formik.touched.writer && formik.errors.writer && (
+        <SpanError>{formik.errors.writer}</SpanError>
       )}
       <Input
         disabled={disabled}
@@ -89,8 +93,8 @@ export const FormCrearProducto: React.FC<FormCrearPeliculaProp> = ({
         value={formik.values.writer}
         onChange={formik.handleChange}
       />
-      {formik.touched.writer && formik.errors.writer && (
-        <SpanError>{formik.errors.writer}</SpanError>
+      {formik.touched.stars && formik.errors.stars && (
+        <SpanError>{formik.errors.stars}</SpanError>
       )}
       <Input
         disabled={disabled}
@@ -99,15 +103,13 @@ export const FormCrearProducto: React.FC<FormCrearPeliculaProp> = ({
         value={formik.values.stars}
         onChange={formik.handleChange}
       />
-      {formik.touched.stars && formik.errors.stars && (
-        <SpanError>{formik.errors.stars}</SpanError>
-      )}
+      <br/>
       <Button type="submit">Registrar</Button>
     </form>
   );
 };
 
-FormCrearProducto.propTypes = {
+FormCrearPelicula.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   formTitle: PropTypes.string.isRequired,
   disabled: PropTypes.bool,

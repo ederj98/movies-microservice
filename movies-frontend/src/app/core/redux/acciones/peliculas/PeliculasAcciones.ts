@@ -42,3 +42,16 @@ export function listarPeliculasAsync() {
     );
   };
 }
+
+export function agregarNuevaPeliculaAsync(pelicula: Pelicula) {
+  return function (dispacth: any) {
+    PeliculaRepositorio.guardar(pelicula)
+    .then((respuesta: any) =>
+      dispacth(
+        agregarNuevaPelicula(pelicula)
+      )
+    ).catch(error => {
+      console.error('There was an error!', error);
+    });
+  };
+}

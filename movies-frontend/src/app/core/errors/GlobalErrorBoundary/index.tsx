@@ -13,14 +13,38 @@ export class GlobalErrorBoundary extends React.Component<any, any> {
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     // Log error to metrics
+    console.log("Lo capture"+error)
   }
 
   render() {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI
-      return <h1>Algo salió mal.</h1>;
-    }
+    const { hasError, errorInfo } = this.state;
+    if (hasError) {
+      return (
+        <div>
+          <div>
+            <p>
+              An error has occurred in this component.{' '}
+              <span
+                style={{ cursor: 'pointer', color: '#0077FF' }}
+                onClick={() => {
+                  window.location.reload();
+                }}
+              >
+                Reload this page
+              </span>{' '}
+            </p>
+          </div>
 
+          <div>
+            <details>
+              <summary>Click for error details</summary>
+              {errorInfo && errorInfo.componentStack.toString()}
+            </details>
+          </div>
+        </div>
+      );
+    }
     return this.props.children;
+
   }
 }

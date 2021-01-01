@@ -24,7 +24,7 @@ export const BtnEliminarPelicula: React.FC<BtnEliminarPeliculaProps> = ({
 
 BtnEliminarPelicula.propTypes = {
   pelicula: PropTypes.shape({
-    Id: PropTypes.string.isRequired,
+    Id: PropTypes.number.isRequired,
     Name: PropTypes.string.isRequired,
     Director: PropTypes.string.isRequired,
     Writer: PropTypes.string.isRequired,

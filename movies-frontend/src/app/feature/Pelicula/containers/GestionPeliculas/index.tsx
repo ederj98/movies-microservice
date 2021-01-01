@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { DivContainer, DivRow } from './styles';
-import { FormCrearProducto } from '../../components/FormCrearProducto';
+import { FormCrearPelicula } from '../../components/FormCrearPelicula';
 import { ListaPeliculas } from '../../components/ListarPeliculas';
 import { Pelicula } from '../../models/Pelicula';
 import { useEffect } from 'react';
@@ -9,8 +9,8 @@ import { useEffect } from 'react';
 interface GestionPeliculasProps {
   peliculas: Array<Pelicula>;
   listarPeliculas: () => void;
-  agregarNuevaPelicula: (peliculas: Pelicula) => void;
-  eliminarPelicula: (peliculas: Pelicula) => void;
+  agregarNuevaPelicula: (pelicula: Pelicula) => void;
+  eliminarPelicula: (pelicula: Pelicula) => void;
 }
 
 export const GestionPeliculas: React.FC<GestionPeliculasProps> = ({
@@ -25,7 +25,7 @@ export const GestionPeliculas: React.FC<GestionPeliculasProps> = ({
   return (
     <DivContainer>
       <DivRow>
-        <FormCrearProducto
+        <FormCrearPelicula
           onSubmit={agregarNuevaPelicula}
           formTitle="Crear pelicula"
         />

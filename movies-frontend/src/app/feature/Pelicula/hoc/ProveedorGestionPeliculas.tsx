@@ -1,5 +1,5 @@
 import {
-  agregarNuevaPelicula,
+  agregarNuevaPeliculaAsync,
   eliminarPelicula,
   listarPeliculasAsync,
 } from '../../../core/redux/acciones/peliculas/PeliculasAcciones';
@@ -13,6 +13,6 @@ const mapStateToProps = (state: EstadoGeneral) => {
 
 export const ProveedorGestionPeliculas = connect(mapStateToProps, {
   listarPeliculas: listarPeliculasAsync,
-  agregarNuevaPelicula,
+  agregarNuevaPelicula: agregarNuevaPeliculaAsync,
   eliminarPelicula,
 })(GestionPeliculas);
