@@ -55,3 +55,16 @@ export function agregarNuevaPeliculaAsync(pelicula: Pelicula) {
     });
   };
 }
+
+export function eliminarPeliculaAsync(pelicula: Pelicula) {
+  return function (dispacth: any) {
+    PeliculaRepositorio.eliminar(pelicula.Id)
+    .then((respuesta: any) =>
+      dispacth(
+        eliminarPelicula(pelicula)
+      )
+    ).catch(error => {
+      console.error('There was an error!', error);
+    });
+  };
+}

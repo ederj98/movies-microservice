@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { BtnEliminarPelicula } from '../EliminarPelicula';
-import { Pelicula } from '../../models/Pelicula';
+import { Pelicula } from '../../../Pelicula/models/Pelicula';
 import { Table } from './styles';
 
 export interface ListaPeliculasProps {

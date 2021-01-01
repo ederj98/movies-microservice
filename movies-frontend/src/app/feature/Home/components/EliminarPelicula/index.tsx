@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { Button } from '../../../../shared/components/Button';
-import { Pelicula } from '../../models/Pelicula';
+import { Pelicula } from '../../../Pelicula/models/Pelicula';
 
 interface BtnEliminarPeliculaProps {
   onEliminar: (pelicula: Pelicula) => any;
