@@ -7,6 +7,7 @@ import { Input } from '../../../../shared/components/Input';
 import { Pelicula } from '../../models/Pelicula';
 import { SpanError } from './styles';
 import { useFormik } from 'formik';
+import { useHistory } from 'react-router-dom';
 
 interface FormValues {
   name: string;
@@ -16,7 +17,7 @@ interface FormValues {
 }
 
 interface FormActualizarPeliculaProp {
-  id: number;
+  pelicula: Pelicula;
   onSubmit: (payload: Pelicula) => any;
   disabled?: boolean;
   formTitle: string;
@@ -31,30 +32,38 @@ const validationSchema = Yup.object().shape<FormValues>({
 });
 
 export const FormActualizarPelicula: React.FC<FormActualizarPeliculaProp> = ({
-  id,
+  pelicula,
   onSubmit,
   disabled,
   formTitle,
   initialValues = {
-    name: 'hola',
-    director: '',
-    writer: '',
-    stars: '',
+    name: pelicula.Name,
+    director: pelicula.Director,
+    writer: pelicula.Writer,
+    stars: pelicula.Stars,
   },
 }) => {
-  console.log('en form '+id)
+  console.log(pelicula.Name)
+  initialValues = {
+    name: pelicula.Name,
+    director: pelicula.Director,
+    writer: pelicula.Writer,
+    stars: pelicula.Stars,
+  };
+  let history = useHistory()
   const handleSubmit = (
     values: FormValues,
     { resetForm }: FormikHelpers<FormValues>
   ) => {
     onSubmit({
-      Id: 2,
+      Id: pelicula.Id,
       Name: values.name,
       Director: values.director,
       Writer: values.writer,
       Stars: values.stars,
     });
     resetForm();
+    history.goBack()
   };
   const formik = useFormik({
     initialValues,

@@ -1,6 +1,7 @@
 import {
   AGREGAR_PELICULA,
   ACTUALIZAR_PELICULA,
+  BUSCAR_PELICULA,
   ELIMINAR_PELICULA,
   LISTAR_PELICULAS,
   TiposAccionesPelicula,
@@ -22,6 +23,16 @@ export function agregarNuevaPelicula(
 ): TiposAccionesPelicula {
   return {
     type: AGREGAR_PELICULA,
+    payload: pelicula,
+  };
+}
+
+export function buscarPelicula(
+  pelicula: Pelicula
+): TiposAccionesPelicula {
+  console.log('buscar')
+  return {
+    type: BUSCAR_PELICULA,
     payload: pelicula,
   };
 }
@@ -53,6 +64,17 @@ export function listarPeliculasAsync() {
   };
 }
 
+export function buscarPeliculaAsync(id: number) {
+  return function (dispacth: any) {
+    PeliculaRepositorio.consultar(id)
+    .then((respuesta: any) =>
+      dispacth(
+        buscarPelicula(respuesta.data)
+      )
+    );
+  };
+}
+
 export function agregarNuevaPeliculaAsync(pelicula: Pelicula) {
   return function (dispacth: any) {
     PeliculaRepositorio.guardar(pelicula)
@@ -71,7 +93,6 @@ export function actualizarPeliculaAsync(pelicula: Pelicula) {
     PeliculaRepositorio.actualizar(pelicula.Id, pelicula)
     .then((respuesta: any) =>
       dispacth(
-        
         actualizarPelicula(pelicula)
       )
     ).catch(error => {

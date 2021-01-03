@@ -4,11 +4,10 @@ import { ProveedorActualizarPelicula } from '../hoc/ProveedorActualizarPelicula'
 import { RouteComponentProps, useParams } from 'react-router-dom';
 
 const UpdateMainPage: React.FC<RouteComponentProps> = () => {
-  let {id} = useParams();
-  console.log(id);
+  let { id } = useParams();
   return (
     <Layout title="Peliculas" description="Gestión de peliculas">
-      <ProveedorActualizarPelicula id={2} />
+      <ProveedorActualizarPelicula id={ id } />
     </Layout>
   );
 };

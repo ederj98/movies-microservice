@@ -2,6 +2,7 @@ import {
   AGREGAR_PELICULA,
   ELIMINAR_PELICULA,
   LISTAR_PELICULAS,
+  BUSCAR_PELICULA,
   TiposAccionesPelicula,
 } from '../../acciones/peliculas/PeliculasTiposAcciones';
 import { EstadoPelicula } from '../../modelo/EstadoPelicula';
@@ -9,6 +10,13 @@ import { Pelicula } from 'app/feature/Pelicula/models/Pelicula';
 
 const initialState: EstadoPelicula = {
   peliculas: Array<Pelicula>(),
+  pelicula: {
+    Id:0,
+    Name: '',
+    Director: '',
+    Writer: '',
+    Stars: '',
+  }
 };
 
 export default function (
@@ -21,6 +29,13 @@ export default function (
       return {
         ...state,
         peliculas,
+      };
+    }
+    case BUSCAR_PELICULA: {
+      const pelicula = action.payload;
+      return {
+        ...state,
+        pelicula,
       };
     }
     case AGREGAR_PELICULA: {

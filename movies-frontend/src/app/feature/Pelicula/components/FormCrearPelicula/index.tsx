@@ -59,10 +59,6 @@ export const FormCrearPelicula: React.FC<FormCrearPeliculaProp> = ({
     onSubmit: handleSubmit,
   });
 
-  function handleChange(e: React.FormEvent<HTMLInputElement>) {
-    console.log(e.currentTarget.value);
-  }  
-
   return (
     <form onSubmit={formik.handleSubmit}>
       <h2>{formTitle}</h2>
@@ -75,7 +71,7 @@ export const FormCrearPelicula: React.FC<FormCrearPeliculaProp> = ({
         name="name"
         placeholder="Name"
         value={formik.values.name}
-        onChange={handleChange}
+        onChange={formik.handleChange}
       />
       {formik.touched.director && formik.errors.director && (
         <SpanError>{formik.errors.director}</SpanError>

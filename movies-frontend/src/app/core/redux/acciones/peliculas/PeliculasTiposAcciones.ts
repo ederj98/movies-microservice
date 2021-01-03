@@ -2,6 +2,7 @@ import { Pelicula } from 'app/feature/Pelicula/models/Pelicula';
 
 export const LISTAR_PELICULAS = 'LISTAR_PELICULAS';
 export const AGREGAR_PELICULA = 'AGREGAR_PELICULA';
+export const BUSCAR_PELICULA = 'BUSCAR_PELICULA';
 export const ACTUALIZAR_PELICULA = 'ACTUALIZAR_PELICULA';
 export const ELIMINAR_PELICULA = 'ELIMINAR_PELICULA';
 
@@ -12,6 +13,11 @@ interface AccionListarPeliculas {
 
 interface AccionAgregarPelicula {
   type: typeof AGREGAR_PELICULA;
+  payload: Pelicula;
+}
+
+interface AccionBuscarPelicula {
+  type: typeof BUSCAR_PELICULA;
   payload: Pelicula;
 }
 
@@ -28,5 +34,6 @@ interface AccionEliminarPelicula {
 export type TiposAccionesPelicula =
   | AccionListarPeliculas
   | AccionAgregarPelicula
+  | AccionBuscarPelicula
   | AccionActualizarPelicula
   | AccionEliminarPelicula;

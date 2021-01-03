@@ -1,23 +1,31 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
+import { useEffect } from 'react';
 import { DivContainer } from '../../../../shared/components/Div/index';
 import { FormActualizarPelicula } from '../../components/ActualizarPelicula/index';
 import { Pelicula } from '../../models/Pelicula';
 
 interface ActualizarPeliculaProps {
-  id: number,
+  pelicula: Pelicula;
+  buscarPelicula: (id: number) => void;
   actualizarPelicula: (pelicula: Pelicula) => void;
+  id: number,
 }
 
 export const ActualizarPelicula: React.FC<ActualizarPeliculaProps> = ({
-  id,
+  pelicula,
+  buscarPelicula,
   actualizarPelicula,
+  id,
 }) => {
-  console.log(id)
+  useEffect(() => {
+    buscarPelicula(id);
+  }, [id, buscarPelicula]);
+  console.log('Proveedor: '+pelicula.Name)
   return (
     <DivContainer>
         <FormActualizarPelicula
-          id={id}
+          pelicula={pelicula}
           onSubmit={actualizarPelicula}
           formTitle="Actualizar pelicula"
         />
@@ -26,5 +34,6 @@ export const ActualizarPelicula: React.FC<ActualizarPeliculaProps> = ({
 };
 
 ActualizarPelicula.propTypes = {
+  buscarPelicula: PropTypes.func.isRequired,
   actualizarPelicula: PropTypes.func.isRequired,
 };

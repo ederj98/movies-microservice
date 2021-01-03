@@ -12,7 +12,7 @@ export const AppRouter = () => {
         <Route path="/" exact component={HomeRouter} />
         <Route path="/home" component={HomeRouter} />
         <Route path="/movie" component={PeliculaRouter} />
-        <Route path="/movies/:id" component={PeliculaARouter} />
+        <Route path="/movies" component={PeliculaARouter} />
       </Switch>
     </BrowserRouter>
   );
