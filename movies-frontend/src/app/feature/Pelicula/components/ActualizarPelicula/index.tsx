@@ -15,7 +15,8 @@ interface FormValues {
   stars: string
 }
 
-interface FormCrearPeliculaProp {
+interface FormActualizarPeliculaProp {
+  id: number;
   onSubmit: (payload: Pelicula) => any;
   disabled?: boolean;
   formTitle: string;
@@ -29,23 +30,25 @@ const validationSchema = Yup.object().shape<FormValues>({
   stars: Yup.string().required('El campo Stars es requerido.'),
 });
 
-export const FormCrearPelicula: React.FC<FormCrearPeliculaProp> = ({
+export const FormActualizarPelicula: React.FC<FormActualizarPeliculaProp> = ({
+  id,
   onSubmit,
   disabled,
   formTitle,
   initialValues = {
-    name: '',
+    name: 'hola',
     director: '',
     writer: '',
     stars: '',
   },
 }) => {
+  console.log('en form '+id)
   const handleSubmit = (
     values: FormValues,
     { resetForm }: FormikHelpers<FormValues>
   ) => {
     onSubmit({
-      Id: 0,
+      Id: 2,
       Name: values.name,
       Director: values.director,
       Writer: values.writer,
@@ -59,10 +62,6 @@ export const FormCrearPelicula: React.FC<FormCrearPeliculaProp> = ({
     onSubmit: handleSubmit,
   });
 
-  function handleChange(e: React.FormEvent<HTMLInputElement>) {
-    console.log(e.currentTarget.value);
-  }  
-
   return (
     <form onSubmit={formik.handleSubmit}>
       <h2>{formTitle}</h2>
@@ -75,7 +74,7 @@ export const FormCrearPelicula: React.FC<FormCrearPeliculaProp> = ({
         name="name"
         placeholder="Name"
         value={formik.values.name}
-        onChange={handleChange}
+        onChange={formik.handleChange}
       />
       {formik.touched.director && formik.errors.director && (
         <SpanError>{formik.errors.director}</SpanError>
@@ -108,12 +107,12 @@ export const FormCrearPelicula: React.FC<FormCrearPeliculaProp> = ({
         onChange={formik.handleChange}
       />
       <br/>
-      <Button type="submit">Registrar</Button>
+      <Button type="submit">Actualizar</Button>
     </form>
   );
 };
 
-FormCrearPelicula.propTypes = {
+FormActualizarPelicula.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   formTitle: PropTypes.string.isRequired,
   disabled: PropTypes.bool,

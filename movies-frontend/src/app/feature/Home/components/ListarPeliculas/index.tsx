@@ -1,6 +1,7 @@
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { BtnEliminarPelicula } from '../EliminarPelicula';
+import { BtnActualizarPelicula } from '../ActualizarPelicula'
 import { Pelicula } from '../../../Pelicula/models/Pelicula';
 import { Table } from './styles';
 
@@ -32,6 +33,9 @@ export const ListaPeliculas: React.FC<ListaPeliculasProps> = ({
           <td>
             <b>Eliminar</b>
           </td>
+          <td>
+            <b>Actualizar</b>
+          </td>
         </tr>
       </thead>
       <tbody>
@@ -47,6 +51,12 @@ export const ListaPeliculas: React.FC<ListaPeliculasProps> = ({
                   pelicula={pelicula}
                   onEliminar={onClickEliminarPelicula}
                 ></BtnEliminarPelicula>
+              </td>
+              <td>
+                <BtnActualizarPelicula
+                  pelicula={pelicula}
+                  onActualizar={onClickEliminarPelicula}
+                ></BtnActualizarPelicula>
               </td>
             </tr>
           );

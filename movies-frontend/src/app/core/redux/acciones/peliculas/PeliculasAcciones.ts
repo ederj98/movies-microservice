@@ -1,5 +1,6 @@
 import {
   AGREGAR_PELICULA,
+  ACTUALIZAR_PELICULA,
   ELIMINAR_PELICULA,
   LISTAR_PELICULAS,
   TiposAccionesPelicula,
@@ -21,6 +22,15 @@ export function agregarNuevaPelicula(
 ): TiposAccionesPelicula {
   return {
     type: AGREGAR_PELICULA,
+    payload: pelicula,
+  };
+}
+
+export function actualizarPelicula(
+  pelicula: Pelicula
+): TiposAccionesPelicula {
+  return {
+    type: ACTUALIZAR_PELICULA,
     payload: pelicula,
   };
 }
@@ -49,6 +59,20 @@ export function agregarNuevaPeliculaAsync(pelicula: Pelicula) {
     .then((respuesta: any) =>
       dispacth(
         agregarNuevaPelicula(pelicula)
+      )
+    ).catch(error => {
+      console.error('There was an error!', error);
+    });
+  };
+}
+
+export function actualizarPeliculaAsync(pelicula: Pelicula) {
+  return function (dispacth: any) {
+    PeliculaRepositorio.actualizar(pelicula.Id, pelicula)
+    .then((respuesta: any) =>
+      dispacth(
+        
+        actualizarPelicula(pelicula)
       )
     ).catch(error => {
       console.error('There was an error!', error);

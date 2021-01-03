@@ -2,7 +2,7 @@ import * as React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { HomeRouter } from 'app/feature/Home/HomeRouter';
 import { NavigationHeader } from 'app/shared/components/NavigationHeader';
-import { PeliculaRouter } from 'app/feature/Pelicula/PeliculaRouter';
+import { PeliculaRouter, PeliculaARouter } from 'app/feature/Pelicula/PeliculaRouter';
 
 export const AppRouter = () => {
   return (
@@ -11,7 +11,8 @@ export const AppRouter = () => {
       <Switch>
         <Route path="/" exact component={HomeRouter} />
         <Route path="/home" component={HomeRouter} />
-        <Route path="/movies" component={PeliculaRouter} />
+        <Route path="/movie" component={PeliculaRouter} />
+        <Route path="/movies/:id" component={PeliculaARouter} />
       </Switch>
     </BrowserRouter>
   );
