@@ -60,7 +60,10 @@ export function listarPeliculasAsync() {
       dispacth(
         listarPeliculas(respuesta.data)
       )
-    );
+    ).catch(error => {
+      alert('Ocurrio un error al consultar las Peliculas')
+      console.error('Error!', error.response);
+    });
   };
 }
 
@@ -71,19 +74,36 @@ export function buscarPeliculaAsync(id: number) {
       dispacth(
         buscarPelicula(respuesta.data)
       )
-    );
+    ).catch(error => {
+      if (error.response.status === 400) {
+        alert('Error en formato del ID, debe ser numerico')
+      } else if (error.response.status === 404) {
+          alert('Pelicula no registrada!')
+      } else {
+        alert('Ocurrido un error al consultar la Pelicula')
+      }
+      console.error('Error!', error.response);
+    });
   };
 }
 
 export function agregarNuevaPeliculaAsync(pelicula: Pelicula) {
   return function (dispacth: any) {
     PeliculaRepositorio.guardar(pelicula)
-    .then((respuesta: any) =>
+    .then((respuesta: any) => {
+      alert('La Pelicula se guardo correctamente!')
       dispacth(
         agregarNuevaPelicula(pelicula)
       )
+    }
     ).catch(error => {
-      console.error('There was an error!', error);
+      if (error.response.status === 400 && 
+            error.response.data.message === 'The movie is already exist') {
+        alert('La Pelicula ya se encuentra registrada!')
+      } else {
+        alert('Ocurrido un error al crear la Pelicula')
+      }
+      console.error('Error!', error.response.data);
     });
   };
 }
@@ -96,7 +116,7 @@ export function actualizarPeliculaAsync(pelicula: Pelicula) {
         actualizarPelicula(pelicula)
       )
     ).catch(error => {
-      console.error('There was an error!', error);
+      console.error('Error!', error.response.data);
     });
   };
 }
@@ -104,12 +124,19 @@ export function actualizarPeliculaAsync(pelicula: Pelicula) {
 export function eliminarPeliculaAsync(pelicula: Pelicula) {
   return function (dispacth: any) {
     PeliculaRepositorio.eliminar(pelicula.Id)
-    .then((respuesta: any) =>
+    .then((respuesta: any) => {
+      alert('La Pelicula fue eliminada correctamente')
       dispacth(
         eliminarPelicula(pelicula)
       )
+    }
     ).catch(error => {
-      console.error('There was an error!', error);
+      if (error.response.status === 404) {
+          alert('Pelicula no registrada!')
+      } else {
+        alert('Ocurrido un error al eliminar la Pelicula')
+      }
+      console.error('Error!', error.response);
     });
   };
 }
