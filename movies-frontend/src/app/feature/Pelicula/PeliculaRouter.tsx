@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import { LazyFallback } from '../../shared/components/LazyFallback';
 
-const MainPage = React.lazy(() => import('./pages/Main'));
+const MainPage = React.lazy(() => import('./pages/Crear'));
 const UpdateMainPage = React.lazy(() => import('./pages/Actualizar'));
 
 export const PeliculaRouter = () => (

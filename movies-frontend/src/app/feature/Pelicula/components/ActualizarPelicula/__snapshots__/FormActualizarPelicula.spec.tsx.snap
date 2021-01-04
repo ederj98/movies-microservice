@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormActualizarPelicula test should match snapshot 1`] = `
+<div>
+  <form>
+    <h2>
+      Form test
+    </h2>
+    <br />
+    <input
+      class="sc-AxirZ eAukyj"
+      name="name"
+      placeholder="Name"
+      value="Interstellar"
+    />
+    <input
+      class="sc-AxirZ eAukyj"
+      name="director"
+      placeholder="Director"
+      value="The Grinch"
+    />
+    <input
+      class="sc-AxirZ eAukyj"
+      name="writer"
+      placeholder="Writer"
+      value="John Doe"
+    />
+    <input
+      class="sc-AxirZ eAukyj"
+      name="stars"
+      placeholder="Stars"
+      value="John Doe, Jane Doe"
+    />
+    <br />
+    <button
+      class="sc-AxjAm fgLnTe"
+      type="submit"
+    >
+      Actualizar
+    </button>
+  </form>
+</div>
+`;

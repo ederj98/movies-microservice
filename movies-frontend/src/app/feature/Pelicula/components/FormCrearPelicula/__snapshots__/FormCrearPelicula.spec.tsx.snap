@@ -1,31 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FormCrearProducto test should match snapshot 1`] = `
+exports[`FormCrearPelicula test should match snapshot 1`] = `
 <div>
   <form>
     <h2>
       Form test
     </h2>
+    <br />
     <input
       class="sc-AxirZ eAukyj"
-      name="title"
-      placeholder="Title"
+      name="name"
+      placeholder="Name"
       value=""
     />
     <input
       class="sc-AxirZ eAukyj"
-      name="slug"
-      placeholder="Slug"
+      name="director"
+      placeholder="Director"
       value=""
     />
     <input
       class="sc-AxirZ eAukyj"
-      name="body"
-      placeholder="Body"
+      name="writer"
+      placeholder="Writer"
       value=""
     />
+    <input
+      class="sc-AxirZ eAukyj"
+      name="stars"
+      placeholder="Stars"
+      value=""
+    />
+    <br />
     <button
-      class="sc-AxjAm kgxTKy"
+      class="sc-AxjAm fgLnTe"
       type="submit"
     >
       Registrar
