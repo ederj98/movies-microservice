@@ -30,7 +30,6 @@ export function agregarNuevaPelicula(
 export function buscarPelicula(
   pelicula: Pelicula
 ): TiposAccionesPelicula {
-  console.log('buscar')
   return {
     type: BUSCAR_PELICULA,
     payload: pelicula,
@@ -110,7 +109,7 @@ export function agregarNuevaPeliculaAsync(pelicula: Pelicula) {
 
 export function actualizarPeliculaAsync(pelicula: Pelicula) {
   return function (dispacth: any) {
-    PeliculaRepositorio.actualizar(pelicula.Id, pelicula)
+    PeliculaRepositorio.actualizar(pelicula.id, pelicula)
     .then((respuesta: any) =>
       dispacth(
         actualizarPelicula(pelicula)
@@ -123,7 +122,7 @@ export function actualizarPeliculaAsync(pelicula: Pelicula) {
 
 export function eliminarPeliculaAsync(pelicula: Pelicula) {
   return function (dispacth: any) {
-    PeliculaRepositorio.eliminar(pelicula.Id)
+    PeliculaRepositorio.eliminar(pelicula.id)
     .then((respuesta: any) => {
       alert('La Pelicula fue eliminada correctamente')
       dispacth(

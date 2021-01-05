@@ -11,11 +11,11 @@ import { Pelicula } from 'app/feature/Pelicula/models/Pelicula';
 const initialState: EstadoPelicula = {
   peliculas: Array<Pelicula>(),
   pelicula: {
-    Id:0,
-    Name: '',
-    Director: '',
-    Writer: '',
-    Stars: '',
+    id:0,
+    name: '',
+    director: '',
+    writer: '',
+    stars: '',
   }
 };
 
@@ -51,7 +51,7 @@ export default function (
       return {
         ...state,
         peliculas: [
-          ...state.peliculas.filter((p) => p.Name !== pelicula.Name),
+          ...state.peliculas.filter((p) => p.name !== pelicula.name),
         ],
       };
     }

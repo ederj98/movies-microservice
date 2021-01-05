@@ -1,6 +1,6 @@
-import * as PropTypes from 'prop-types';
-import * as React from 'react';
-import * as Yup from 'yup';
+import React from 'react';
+import { func, string as str, bool, shape } from 'prop-types';
+import { object, string } from 'yup';
 import { Button } from '../../../../shared/components/Button';
 import { FormikHelpers } from 'formik/dist/types';
 import { Input } from '../../../../shared/components/Input';
@@ -22,11 +22,11 @@ interface FormCrearPeliculaProp {
   initialValues?: FormValues;
 }
 
-const validationSchema = Yup.object().shape<FormValues>({
-  name: Yup.string().required('El campo Name es requerido.'),
-  director: Yup.string().required('El campo Director es requerido.'),
-  writer: Yup.string().required('El campo Writer es requerido.'),
-  stars: Yup.string().required('El campo Stars es requerido.'),
+const validationSchema = object().shape<FormValues>({
+  name: string().required('El campo Name es requerido.'),
+  director: string().required('El campo Director es requerido.'),
+  writer: string().required('El campo Writer es requerido.'),
+  stars: string().required('El campo Stars es requerido.'),
 });
 
 export const FormCrearPelicula: React.FC<FormCrearPeliculaProp> = ({
@@ -45,11 +45,11 @@ export const FormCrearPelicula: React.FC<FormCrearPeliculaProp> = ({
     { resetForm }: FormikHelpers<FormValues>
   ) => {
     onSubmit({
-      Id: 0,
-      Name: values.name,
-      Director: values.director,
-      Writer: values.writer,
-      Stars: values.stars,
+      id: 0,
+      name: values.name,
+      director: values.director,
+      writer: values.writer,
+      stars: values.stars,
     });
     resetForm();
   };
@@ -110,13 +110,13 @@ export const FormCrearPelicula: React.FC<FormCrearPeliculaProp> = ({
 };
 
 FormCrearPelicula.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  formTitle: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
-  initialValues: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    writer: PropTypes.string.isRequired,
-    stars: PropTypes.string.isRequired,
+  onSubmit: func.isRequired,
+  formTitle: str.isRequired,
+  disabled: bool,
+  initialValues: shape({
+    name: str.isRequired,
+    director: str.isRequired,
+    writer: str.isRequired,
+    stars: str.isRequired,
   }),
 };

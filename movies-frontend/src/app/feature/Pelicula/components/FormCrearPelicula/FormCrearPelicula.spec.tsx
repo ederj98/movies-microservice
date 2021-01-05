@@ -131,9 +131,9 @@ describe('FormCrearPelicula test', () => {
 
     const formSubmitted = componentProps.onSubmit.firstCall.args[0];
     
-    expect(formSubmitted.Name).toBe('Interstellar');
-    expect(formSubmitted.Director).toBe('The Grinch');
-    expect(formSubmitted.Writer).toBe('John Doe');
-    expect(formSubmitted.Stars).toBe('John Doe, Jane Doe');
+    expect(formSubmitted.name).toBe('Interstellar');
+    expect(formSubmitted.director).toBe('The Grinch');
+    expect(formSubmitted.writer).toBe('John Doe');
+    expect(formSubmitted.stars).toBe('John Doe, Jane Doe');
   });
 });

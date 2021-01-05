@@ -1,6 +1,5 @@
-import * as PropTypes from 'prop-types';
-import * as React from 'react';
-import * as Yup from 'yup';
+import { func, string as str, bool } from 'prop-types';
+import { object, number, string } from 'yup';
 import { Button } from '../../../../shared/components/Button';
 import { FormikHelpers } from 'formik/dist/types';
 import { Input } from '../../../../shared/components/Input';
@@ -8,8 +7,10 @@ import { Pelicula } from '../../models/Pelicula';
 import { SpanError } from './styles';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
 
 interface FormValues {
+  id: number
   name: string;
   director: string;
   writer: string;
@@ -21,14 +22,14 @@ interface FormActualizarPeliculaProp {
   onSubmit: (payload: Pelicula) => any;
   disabled?: boolean;
   formTitle: string;
-  initialValues?: FormValues;
 }
 
-const validationSchema = Yup.object().shape<FormValues>({
-  name: Yup.string().required('El campo Name es requerido.'),
-  director: Yup.string().required('El campo Director es requerido.'),
-  writer: Yup.string().required('El campo Writer es requerido.'),
-  stars: Yup.string().required('El campo Stars es requerido.'),
+const validationSchema = object().shape<FormValues>({
+  id: number().required('El campo Id es requerido.'),
+  name: string().required('El campo Name es requerido.'),
+  director: string().required('El campo Director es requerido.'),
+  writer: string().required('El campo Writer es requerido.'),
+  stars: string().required('El campo Stars es requerido.'),
 });
 
 export const FormActualizarPelicula: React.FC<FormActualizarPeliculaProp> = ({
@@ -36,31 +37,31 @@ export const FormActualizarPelicula: React.FC<FormActualizarPeliculaProp> = ({
   onSubmit,
   disabled,
   formTitle,
-  initialValues = {
-    name: pelicula.Name,
-    director: pelicula.Director,
-    writer: pelicula.Writer,
-    stars: pelicula.Stars,
-  },
 }) => {
-  console.log(pelicula.Name)
-  initialValues = {
-    name: pelicula.Name,
-    director: pelicula.Director,
-    writer: pelicula.Writer,
-    stars: pelicula.Stars,
-  };
+  console.log(pelicula.name)
+  let initialValues = {
+    id: pelicula.id || 0,
+    name: pelicula.name || '',
+    director: pelicula.director || '',
+    writer: pelicula.writer || '',
+    stars: pelicula.stars || '',
+  }
+  useEffect(() => {
+    initialValues = pelicula
+    console.log('Initial ', initialValues)
+  }, [pelicula, initialValues]);
+  
   let history = useHistory()
   const handleSubmit = (
     values: FormValues,
     { resetForm }: FormikHelpers<FormValues>
   ) => {
     onSubmit({
-      Id: pelicula.Id,
-      Name: values.name,
-      Director: values.director,
-      Writer: values.writer,
-      Stars: values.stars,
+      id: pelicula.id,
+      name: values.name,
+      director: values.director,
+      writer: values.writer,
+      stars: values.stars,
     });
     resetForm();
     history.goBack()
@@ -122,13 +123,7 @@ export const FormActualizarPelicula: React.FC<FormActualizarPeliculaProp> = ({
 };
 
 FormActualizarPelicula.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  formTitle: PropTypes.string.isRequired,
-  disabled: PropTypes.bool,
-  initialValues: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    writer: PropTypes.string.isRequired,
-    stars: PropTypes.string.isRequired,
-  }),
+  onSubmit: func.isRequired,
+  formTitle: str.isRequired,
+  disabled: bool,
 };

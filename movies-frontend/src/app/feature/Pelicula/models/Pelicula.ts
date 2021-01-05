@@ -1,7 +1,7 @@
 export interface Pelicula {
-  Id: number;
-  Name: string;
-  Director: string;
-  Writer: string;
-  Stars: string;
+  id: number;
+  name: string;
+  director: string;
+  writer: string;
+  stars: string;
 }

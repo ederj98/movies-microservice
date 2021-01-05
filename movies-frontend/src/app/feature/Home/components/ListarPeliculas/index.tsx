@@ -41,11 +41,11 @@ export const ListaPeliculas: React.FC<ListaPeliculasProps> = ({
       <tbody>
         {peliculas.map((pelicula: Pelicula) => {
           return (
-            <tr key={pelicula.Id}>
-              <td>{pelicula.Name}</td>
-              <td>{pelicula.Director}</td>
-              <td>{pelicula.Writer}</td>
-              <td>{pelicula.Stars}</td>
+            <tr key={pelicula.id}>
+              <td>{pelicula.name}</td>
+              <td>{pelicula.director}</td>
+              <td>{pelicula.writer}</td>
+              <td>{pelicula.stars}</td>
               <td>
                 <BtnEliminarPelicula
                   pelicula={pelicula}

@@ -14,7 +14,7 @@ export const BtnActualizarPelicula: React.FC<BtnActualizarPeliculaProps> = ({
   pelicula,
 }) => {
   const history = useHistory();
-  const handleActualizar = () => history.push(`/movies/${pelicula.Id}`);
+  const handleActualizar = () => history.push(`/movies/${pelicula.id}`);
   return (
     <Button onClick={handleActualizar}>
       <span role="img" aria-labelledby="trash">
@@ -26,11 +26,11 @@ export const BtnActualizarPelicula: React.FC<BtnActualizarPeliculaProps> = ({
 
 BtnActualizarPelicula.propTypes = {
   pelicula: PropTypes.shape({
-    Id: PropTypes.number.isRequired,
-    Name: PropTypes.string.isRequired,
-    Director: PropTypes.string.isRequired,
-    Writer: PropTypes.string.isRequired,
-    Stars: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    director: PropTypes.string.isRequired,
+    writer: PropTypes.string.isRequired,
+    stars: PropTypes.string.isRequired,
   }).isRequired,
   onActualizar: PropTypes.func.isRequired,
 };

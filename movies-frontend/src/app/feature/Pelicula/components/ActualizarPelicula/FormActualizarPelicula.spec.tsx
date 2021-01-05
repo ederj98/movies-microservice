@@ -12,7 +12,7 @@ describe('FormActualizarPelicula test', () => {
 
   beforeEach(() => {
     componentProps = {
-      pelicula: {Id: 1, Name: 'Interstellar', Director: 'The Grinch', Writer: 'John Doe', Stars: 'John Doe, Jane Doe'},
+      pelicula: {id: 1, name: 'Interstellar', director: 'The Grinch', writer: 'John Doe', stars: 'John Doe, Jane Doe'},
       formTitle: 'Form test',
       onSubmit: stub(),
     };
@@ -37,10 +37,10 @@ describe('FormActualizarPelicula test', () => {
 
     const formSubmitted = componentProps.onSubmit.firstCall.args[0];
     
-    expect(formSubmitted.Name).toBe('Stargate');
-    expect(formSubmitted.Director).toBe('The Grinch');
-    expect(formSubmitted.Writer).toBe('John Doe');
-    expect(formSubmitted.Stars).toBe('John Doe, Jane Doe');
+    expect(formSubmitted.name).toBe('Stargate');
+    expect(formSubmitted.director).toBe('The Grinch');
+    expect(formSubmitted.writer).toBe('John Doe');
+    expect(formSubmitted.stars).toBe('John Doe, Jane Doe');
   });
 
   it('should submit with writer updated', async () => {
@@ -57,10 +57,10 @@ describe('FormActualizarPelicula test', () => {
 
     const formSubmitted = componentProps.onSubmit.firstCall.args[0];
     
-    expect(formSubmitted.Name).toBe('Interstellar');
-    expect(formSubmitted.Director).toBe('The Grinch');
-    expect(formSubmitted.Writer).toBe('Maria Jane Watson');
-    expect(formSubmitted.Stars).toBe('John Doe, Jane Doe');
+    expect(formSubmitted.name).toBe('Interstellar');
+    expect(formSubmitted.director).toBe('The Grinch');
+    expect(formSubmitted.writer).toBe('Maria Jane Watson');
+    expect(formSubmitted.stars).toBe('John Doe, Jane Doe');
   });
 
   it('should submit with stars updated', async () => {
@@ -77,10 +77,10 @@ describe('FormActualizarPelicula test', () => {
 
     const formSubmitted = componentProps.onSubmit.firstCall.args[0];
     
-    expect(formSubmitted.Name).toBe('Interstellar');
-    expect(formSubmitted.Director).toBe('The Grinch');
-    expect(formSubmitted.Writer).toBe('John Doe');
-    expect(formSubmitted.Stars).toBe('Miguel J Jhonson, Caprica Six');
+    expect(formSubmitted.name).toBe('Interstellar');
+    expect(formSubmitted.director).toBe('The Grinch');
+    expect(formSubmitted.writer).toBe('John Doe');
+    expect(formSubmitted.stars).toBe('Miguel J Jhonson, Caprica Six');
   });
 
   it('should submit director updated', async () => {
@@ -97,9 +97,9 @@ describe('FormActualizarPelicula test', () => {
 
     const formSubmitted = componentProps.onSubmit.firstCall.args[0];
     
-    expect(formSubmitted.Name).toBe('Interstellar');
-    expect(formSubmitted.Director).toBe('Jane M Doe');
-    expect(formSubmitted.Writer).toBe('John Doe');
-    expect(formSubmitted.Stars).toBe('John Doe, Jane Doe');
+    expect(formSubmitted.name).toBe('Interstellar');
+    expect(formSubmitted.director).toBe('Jane M Doe');
+    expect(formSubmitted.writer).toBe('John Doe');
+    expect(formSubmitted.stars).toBe('John Doe, Jane Doe');
   });
 });

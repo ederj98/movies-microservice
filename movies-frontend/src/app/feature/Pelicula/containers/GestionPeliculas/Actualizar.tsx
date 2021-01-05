@@ -20,8 +20,9 @@ export const ActualizarPelicula: React.FC<ActualizarPeliculaProps> = ({
 }) => {
   useEffect(() => {
     buscarPelicula(id);
+    
+  console.log('Proveedor: '+pelicula.name)
   }, [id, buscarPelicula]);
-  console.log('Proveedor: '+pelicula.Name)
   return (
     <DivContainer>
         <FormActualizarPelicula
