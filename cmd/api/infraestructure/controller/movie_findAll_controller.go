@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/ederj98/movies-microservice/cmd/api/application"
+	"github.com/ederj98/movies-microservice/cmd/api/infraestructure/marshaller"
 	"github.com/ederj98/movies-microservice/cmd/api/infraestructure/util"
 	"github.com/ederj98/movies-microservice/pkg/apierrors"
 	"github.com/gin-gonic/gin"
@@ -31,5 +32,5 @@ func (movieFindAllController *MovieFindAllController) MakeMovieFindAll(context *
 	//Resty usage test
 	util.RestyGet()
 
-	context.JSON(http.StatusOK, moviesList)
+	context.JSON(http.StatusOK, marshaller.MarshallArray(moviesList))
 }

@@ -1,7 +1,6 @@
 package controller_test
 
 import (
-	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -32,15 +31,14 @@ func setupMovieFindAllController(movieFindAllMock *mockMovie.MovieFindAllMock) (
 func TestWhenMovieFindAllMoviesThenReturn200AndMoviesList(t *testing.T) {
 	router, controllerMovie := setupMovieFindAllController(&movieFindAllMock)
 	movieList := []model.Movie{builder.NewMovieDataBuilder().Build()}
-	expectedBody, err := json.Marshal(movieList)
+	expectedBody := "[{\"id\":1,\"name\":\"Interstellar\",\"director\":\"John Doe\",\"writer\":\"Jane Doe\",\"stars\":\"John Jr Doe, Jane M Doe\"}]"
 	movieFindAllMock.On("Handler").Times(1).Return(movieList, nil).Once()
 	movieFindAllRouterGroup := router.Group(movieFindAllURITest)
 	movieFindAllRouterGroup.GET("", controllerMovie.MakeMovieFindAll)
 
 	response := controller.RunRequestWithHeaders(t, router, http.MethodGet, movieFindAllURITest, "", nil)
 
-	assert.Nil(t, err)
 	assert.Equal(t, http.StatusOK, response.Code)
-	assert.Equal(t, string(expectedBody), response.Body.String())
+	assert.Equal(t, expectedBody, response.Body.String())
 	movieFindAllMock.AssertExpectations(t)
 }

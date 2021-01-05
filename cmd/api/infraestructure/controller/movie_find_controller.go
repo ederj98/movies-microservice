@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/ederj98/movies-microservice/cmd/api/application"
+	"github.com/ederj98/movies-microservice/cmd/api/infraestructure/marshaller"
 	"github.com/ederj98/movies-microservice/pkg/apierrors"
 	"github.com/gin-gonic/gin"
 )
@@ -28,7 +29,7 @@ func (movieFindController *MovieFindController) MakeMovieFind(context *gin.Conte
 		return
 	}
 
-	context.JSON(http.StatusOK, movie)
+	context.JSON(http.StatusOK, marshaller.Marshall(movie))
 
 }
 
