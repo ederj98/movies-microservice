@@ -1,5 +1,6 @@
 import {
   AGREGAR_PELICULA,
+  ACTUALIZAR_PELICULA,
   ELIMINAR_PELICULA,
   LISTAR_PELICULAS,
   BUSCAR_PELICULA,
@@ -43,6 +44,16 @@ export default function (
       return {
         ...state,
         peliculas: [...state.peliculas, pelicula],
+      };
+    }
+
+    case ACTUALIZAR_PELICULA: {
+      const pelicula = action.payload;
+      return {
+        ...state,
+        peliculas: [
+          ...state.peliculas.filter((p) => p.name !== pelicula.name), pelicula
+        ],
       };
     }
 

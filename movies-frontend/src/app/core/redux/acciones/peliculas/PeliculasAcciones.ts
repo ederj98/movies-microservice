@@ -98,9 +98,9 @@ export function agregarNuevaPeliculaAsync(pelicula: Pelicula) {
     ).catch(error => {
       if (error.response.status === 400 && 
             error.response.data.message === 'The movie is already exist') {
-        alert('La Pelicula ya se encuentra registrada!')
+        alert('Error! La Pelicula ya se encuentra registrada!')
       } else {
-        alert('Ocurrido un error al crear la Pelicula')
+        alert('Error! Ocurrido un error al crear la Pelicula')
       }
       console.error('Error!', error.response.data);
     });

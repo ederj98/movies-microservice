@@ -6,8 +6,8 @@ import { Input } from '../../../../shared/components/Input';
 import { Pelicula } from '../../models/Pelicula';
 import { SpanError } from './styles';
 import { useFormik } from 'formik';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import React, { useEffect } from 'react';
 
 interface FormValues {
   id: number
@@ -38,17 +38,15 @@ export const FormActualizarPelicula: React.FC<FormActualizarPeliculaProp> = ({
   disabled,
   formTitle,
 }) => {
-  console.log(pelicula.name)
-  let initialValues = {
+  const [initialValues, setInitialValues] = useState({
     id: pelicula.id || 0,
     name: pelicula.name || '',
     director: pelicula.director || '',
     writer: pelicula.writer || '',
     stars: pelicula.stars || '',
-  }
+  })
   useEffect(() => {
-    initialValues = pelicula
-    console.log('Initial ', initialValues)
+    setInitialValues(pelicula)
   }, [pelicula, initialValues]);
   
   let history = useHistory()
@@ -65,11 +63,13 @@ export const FormActualizarPelicula: React.FC<FormActualizarPeliculaProp> = ({
     });
     resetForm();
     history.goBack()
+    //window.location.href = "/home";
   };
   const formik = useFormik({
     initialValues,
     validationSchema,
     onSubmit: handleSubmit,
+    enableReinitialize: true,
   });
 
   return (
