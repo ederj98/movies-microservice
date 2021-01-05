@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	errorFindRepository = "The movie isn't not found"
+	errorFindRepository = "Movie not found"
 )
 
 func TestWhenGetTheMovieFindFromRepositoryThenShouldReturnOk(t *testing.T) {

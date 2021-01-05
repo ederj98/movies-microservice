@@ -8,6 +8,7 @@ import (
 	"github.com/ederj98/movies-microservice/cmd/api/domain/exception"
 	"github.com/ederj98/movies-microservice/cmd/api/infraestructure/controller"
 	"github.com/ederj98/movies-microservice/cmd/api/infraestructure/controller/middleware"
+	"github.com/ederj98/movies-microservice/cmd/test/builder"
 	mockMovie "github.com/ederj98/movies-microservice/cmd/test/mock"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
@@ -15,7 +16,8 @@ import (
 )
 
 const (
-	movieUpdateURITest = "/movies/:id"
+	movieUpdateURITest       = "/api/movies/:id"
+	movieUpdateURITestWithId = "/api/movies/1"
 )
 
 var (
@@ -29,28 +31,41 @@ func setupMovieUpdateController(movieUpdateMock *mockMovie.MovieUpdateMock) (*gi
 	return router, &controller.MovieUpdateController{MovieUpdateApplication: movieUpdateMock}
 }
 func TestWhenMakeMovieUpdateThenReturn204(t *testing.T) {
-
 	router, controllerMovie := setupMovieUpdateController(&movieUpdateMock)
+	movie := builder.NewMovieDataBuilder().BuildString()
 	movieUpdateMock.On("Handler", mock.Anything, mock.Anything).Times(1).Return(nil).Once()
 	movieRouterGroup := router.Group(movieUpdateURITest)
 	movieRouterGroup.PUT("", controllerMovie.MakeMovieUpdate)
 
-	response := controller.RunRequestWithHeaders(t, router, http.MethodPost, movieUpdateURITest, "", nil)
+	response := controller.RunRequestWithHeaders(t, router, http.MethodPut, movieUpdateURITestWithId, movie, nil)
 
 	assert.Equal(t, http.StatusNoContent, response.Code)
 	movieUpdateMock.AssertExpectations(t)
 }
 
-func TestWhenMakeParkingUpdateFailedThenReturn400(t *testing.T) {
-
+func TestWhenMakeMovieUpdateMovieNotFoundThenReturn404(t *testing.T) {
 	router, controllerMovie := setupMovieUpdateController(&movieUpdateMock)
-	errorExpected := exception.DataNotFound{ErrMessage: "we didn't found information"}
+	errorExpected := exception.DataNotFound{ErrMessage: "Movie not found"}
+	movie := builder.NewMovieDataBuilder().BuildString()
 	movieUpdateMock.On("Handler", mock.Anything, mock.Anything).Times(1).Return(errorExpected).Once()
 	movieRouterGroup := router.Group(movieUpdateURITest)
 	movieRouterGroup.PUT("", controllerMovie.MakeMovieUpdate)
 
-	response := controller.RunRequestWithHeaders(t, router, http.MethodPost, movieUpdateURITest, "", nil)
+	response := controller.RunRequestWithHeaders(t, router, http.MethodPut, movieUpdateURITestWithId, movie, nil)
+
+	assert.Equal(t, http.StatusNotFound, response.Code)
+	movieCreationMock.AssertExpectations(t)
+}
+
+func TestWhenMakeMovieUpdateInvalidIdThenReturn400(t *testing.T) {
+	router, controllerMovie := setupMovieUpdateController(&movieUpdateMock)
+	movie := builder.NewMovieDataBuilder().BuildString()
+	movieUpdateMock.On("Handler", mock.Anything, mock.Anything).Times(1).Return(nil).Once()
+	movieRouterGroup := router.Group(movieUpdateURITest)
+	movieRouterGroup.PUT("", controllerMovie.MakeMovieUpdate)
+
+	response := controller.RunRequestWithHeaders(t, router, http.MethodPut, movieUpdateURITest, movie, nil)
 
 	assert.Equal(t, http.StatusBadRequest, response.Code)
-	movieUpdateMock.AssertExpectations(t)
+	movieCreationMock.AssertExpectations(t)
 }

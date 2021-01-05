@@ -1,13 +1,14 @@
 package controller_test
 
 import (
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
+	"github.com/ederj98/movies-microservice/cmd/api/domain/exception"
 	"github.com/ederj98/movies-microservice/cmd/api/infraestructure/controller"
 	"github.com/ederj98/movies-microservice/cmd/api/infraestructure/controller/middleware"
+	"github.com/ederj98/movies-microservice/cmd/test/builder"
 	mockMovie "github.com/ederj98/movies-microservice/cmd/test/mock"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
@@ -15,7 +16,7 @@ import (
 )
 
 const (
-	movieCreationURITest = "/api"
+	movieCreationURITest = "/api/movies"
 )
 
 var (
@@ -29,28 +30,28 @@ func setupMovieCreationController(movieCreationMock *mockMovie.MovieCreationMock
 	return router, &controller.MovieCreationController{MovieCreationApplication: movieCreationMock}
 }
 func TestWhenMakeMovieCreationThenReturn201(t *testing.T) {
-	//movie := builder.NewMovieDataBuilder().Build()
+	movie := builder.NewMovieDataBuilder().BuildString()
 	router, controllerMovie := setupMovieCreationController(&movieCreationMock)
 	movieCreationMock.On("Handler", mock.Anything).Times(1).Return(nil).Once()
 	movieRouterGroup := router.Group(movieCreationURITest)
-	movieRouterGroup.POST("/movies", controllerMovie.MakeMovieCreation)
+	movieRouterGroup.POST("", controllerMovie.MakeMovieCreation)
 
-	response := controller.RunRequestWithHeaders(t, router, http.MethodPost, movieCreationURITest, "", nil)
-	fmt.Println(response)
+	response := controller.RunRequestWithHeaders(t, router, http.MethodPost, movieCreationURITest, movie, nil)
+
 	assert.Equal(t, http.StatusCreated, response.Code)
 	movieCreationMock.AssertExpectations(t)
 }
 
-/*func TestWhenMakeParkingCreationFailedThenReturn400(t *testing.T) {
-
+func TestWhenMakeMovieCreationFoundThenReturn404(t *testing.T) {
 	router, controllerMovie := setupMovieCreationController(&movieCreationMock)
-	errorExpected := exception.DataNotFound{ErrMessage: "we didn't found information"}
+	errorExpected := exception.DataNotFound{ErrMessage: "The movie is already exist"}
+	movie := builder.NewMovieDataBuilder().BuildString()
 	movieCreationMock.On("Handler", mock.Anything).Times(1).Return(errorExpected).Once()
 	movieRouterGroup := router.Group(movieCreationURITest)
 	movieRouterGroup.POST("", controllerMovie.MakeMovieCreation)
 
-	response := controller.RunRequestWithHeaders(t, router, http.MethodPost, movieCreationURITest, "", nil)
+	response := controller.RunRequestWithHeaders(t, router, http.MethodPost, movieCreationURITest, movie, nil)
 
-	assert.Equal(t, http.StatusBadRequest, response.Code)
+	assert.Equal(t, http.StatusNotFound, response.Code)
 	movieCreationMock.AssertExpectations(t)
-}*/
+}

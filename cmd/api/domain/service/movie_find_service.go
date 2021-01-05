@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	errorNotFoundRepository = "The movie isn't not found"
+	errorNotFoundRepository = "Movie not found"
 )
 
 type MovieFindServicePort interface {
@@ -25,7 +25,7 @@ type MovieFindService struct {
 func (movieFindService *MovieFindService) Find(id int64) (movie model.Movie, err error) {
 
 	movie, err = movieFindService.MovieRedisRepository.Get(id)
-	logger.Info(fmt.Sprintf("Consulta Redis: %s", movie))
+	logger.Info(fmt.Sprintf("Consulta Redis: %s", movie.Name))
 
 	if err != nil {
 		movie, err = movieFindService.MovieRepository.Find(id)

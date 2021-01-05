@@ -35,7 +35,7 @@ func (movieCreationController *MovieCreationController) MakeMovieCreation(contex
 
 }
 
-// mapMovie used for get attributes for  any movie from url
+// mapMovie used for get attributes for  any movie from body
 func (movieCreationController *MovieCreationController) mapMovie(c *gin.Context) (movie model.Movie) {
 
 	var movieL model.Movie
