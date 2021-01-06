@@ -6,7 +6,7 @@ type MovieDeleteServiceMock struct {
 	mock.Mock
 }
 
-func (mock *MovieDeleteServiceMock) MovieDelete(id int64) error {
+func (mock *MovieDeleteServiceMock) Delete(id int64) error {
 	args := mock.Called(id)
 	return args.Error(0)
 }

@@ -1,6 +1,8 @@
 package builder
 
 import (
+	"fmt"
+
 	"github.com/ederj98/movies-microservice/cmd/api/domain/model"
 )
 
@@ -29,4 +31,12 @@ func (builder *MovieDataBuilder) Build() model.Movie {
 		Writer:   builder.Writer,
 		Stars:    builder.Stars,
 	}
+}
+
+func (builder *MovieDataBuilder) BuildString() string {
+	return fmt.Sprintf(
+		"{\"name\":\"%s\",\"director\":\"%s\",\"writer\":\"%s\",\"stars\":\"%s\"}",
+		builder.Name, builder.Director, builder.Writer, builder.Stars,
+	)
+
 }

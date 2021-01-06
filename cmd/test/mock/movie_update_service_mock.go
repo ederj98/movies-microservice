@@ -9,7 +9,7 @@ type MovieUpdateServiceMock struct {
 	mock.Mock
 }
 
-func (mock *MovieUpdateServiceMock) MovieUpdate(movie model.Movie) error {
-	args := mock.Called(movie)
+func (mock *MovieUpdateServiceMock) Update(id int64, movie model.Movie) error {
+	args := mock.Called(id, movie)
 	return args.Error(0)
 }

@@ -9,7 +9,7 @@ type MovieFindAllServiceMock struct {
 	mock.Mock
 }
 
-func (mock *MovieFindAllServiceMock) FindAllMovie() (movies []model.Movie, err error) {
+func (mock *MovieFindAllServiceMock) FindAll() (movies []model.Movie, err error) {
 	args := mock.Called()
 	return args.Get(0).([]model.Movie), args.Error(1)
 }

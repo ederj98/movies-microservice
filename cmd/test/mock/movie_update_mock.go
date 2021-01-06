@@ -9,7 +9,7 @@ type MovieUpdateMock struct {
 	mock.Mock
 }
 
-func (mock *MovieUpdateMock) Handler(movie model.Movie) (err error) {
-	args := mock.Called(movie)
+func (mock *MovieUpdateMock) Handler(id int64, movie model.Movie) (err error) {
+	args := mock.Called(id, movie)
 	return args.Error(0)
 }

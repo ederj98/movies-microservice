@@ -9,7 +9,7 @@ type MovieFindServiceMock struct {
 	mock.Mock
 }
 
-func (mock *MovieFindServiceMock) FindMovie(id int64) (movie model.Movie, err error) {
+func (mock *MovieFindServiceMock) Find(id int64) (movie model.Movie, err error) {
 	args := mock.Called(id)
 	return args.Get(0).(model.Movie), args.Error(1)
 }

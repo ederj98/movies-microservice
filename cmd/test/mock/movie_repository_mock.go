@@ -14,6 +14,11 @@ func (mock *MovieRepositoryMock) Create(movie model.Movie) (err error) {
 	return args.Error(0)
 }
 
+func (mock *MovieRepositoryMock) Exist(name string) (exist bool) {
+	args := mock.Called(name)
+	return args.Get(0).(bool)
+}
+
 func (mock *MovieRepositoryMock) Find(id int64) (movie model.Movie, err error) {
 	args := mock.Called(id)
 	return args.Get(0).(model.Movie), args.Error(1)
@@ -25,7 +30,7 @@ func (mock *MovieRepositoryMock) FindAll() (movies []model.Movie, err error) {
 }
 
 func (mock *MovieRepositoryMock) Update(id int64, movie model.Movie) (err error) {
-	args := mock.Called(movie)
+	args := mock.Called(id, movie)
 	return args.Error(0)
 }
 
